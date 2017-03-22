@@ -1,7 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
 Public Class clsLiveBox : Implements IDisposable
-
     Private RowLimit As Integer = 15
     Private WithEvents LiveWorker As BackgroundWorker
     Private WithEvents HideTimer As Timer

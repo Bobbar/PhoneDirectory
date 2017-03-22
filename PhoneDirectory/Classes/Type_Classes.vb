@@ -12,4 +12,10 @@ Public Class SearchVal
         Value = obValue
     End Sub
 End Class
+Public NotInheritable Class AccessGroup
+    Public Const Add As String = "add"
+    Public Const CanRun As String = "can_run"
+    Public Const Delete As String = "delete"
+    Public Const Modify As String = "modify"
+End Class
 

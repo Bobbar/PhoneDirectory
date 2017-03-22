@@ -91,7 +91,7 @@ Module modSecurityMod
     End Function
     Public Function CheckForAccess(recModule As String) As Boolean
         If Not CanAccess(recModule, UserAccess.intAccessLevel.Value) Then
-            Dim blah = Message("You do not have the required rights for this function. Must have access to '" & recModule & "'.", vbOKOnly + vbExclamation, "Access Denied")
+            Dim blah = Message("You do not have the required rights for this function. Must have access to '" & recModule & "'.", vbOKOnly + vbExclamation, "Access Denied", PhoneDirectory)
             Return False
         Else
             Return True
@@ -103,14 +103,33 @@ Module modSecurityMod
             Using SQLComms As New clsMySQL_Comms, results As DataTable = SQLComms.Return_SQLTable(strQRY)
                 If results.Rows.Count > 0 Then
                     For Each r As DataRow In results.Rows
-                        UserAccess.strUsername.Value = r.Item(UserAccess.strUsername.ColumnName)
-                        UserAccess.strFullname.Value = r.Item(UserAccess.strFullname.ColumnName)
-                        UserAccess.intAccessLevel.Value = r.Item(UserAccess.intAccessLevel.ColumnName)
-                        UserAccess.strUID.Value = r.Item(UserAccess.strUID.ColumnName)
+                        UserAccess.strUsername.Value = r.Item(UserAccess.strUsername.ColumnName).ToString
+                        UserAccess.strFullname.Value = r.Item(UserAccess.strFullname.ColumnName).ToString
+                        UserAccess.intAccessLevel.Value = DirectCast(r.Item(UserAccess.intAccessLevel.ColumnName), Integer)
+                        UserAccess.strUID.Value = r.Item(UserAccess.strUID.ColumnName).ToString
                     Next
                 Else
                     UserAccess.intAccessLevel.Value = 0
                 End If
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+        End Try
+    End Sub
+    Public Sub GetAccessLevels()
+        Try
+            Dim strQRY = "SELECT * FROM " & Security.TableName & " ORDER BY " & Security.AccessLevel & "" ' WHERE usr_username='" & strLocalUser & "'"
+            Dim rows As Integer
+            Using SQLComms As New clsMySQL_Comms, results As DataTable = SQLComms.Return_SQLTable(strQRY)
+                ReDim AccessLevels(0)
+                rows = -1
+                For Each r As DataRow In results.Rows
+                    rows += 1
+                    ReDim Preserve AccessLevels(rows)
+                    AccessLevels(rows).intLevel = r.Item(Security.AccessLevel)
+                    AccessLevels(rows).strModule = r.Item(Security.SecModule)
+                    AccessLevels(rows).strDesc = r.Item(Security.Description)
+                Next
             End Using
         Catch ex As Exception
             ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
