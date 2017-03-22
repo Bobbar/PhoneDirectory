@@ -97,17 +97,16 @@ Module modSecurityMod
             Return True
         End If
     End Function
-
     Public Sub GetUserAccess()
         Try
             Dim strQRY = "SELECT * FROM " & UserAccess.TableName & " WHERE " & UserAccess.strUsername.ColumnName & "='" & strLocalUser & "'"
             Using SQLComms As New clsMySQL_Comms, results As DataTable = SQLComms.Return_SQLTable(strQRY)
                 If results.Rows.Count > 0 Then
                     For Each r As DataRow In results.Rows
-                        UserAccess.strUsername = r.Item(UserAccess.strUsername.ColumnName)
-                        UserAccess.strFullname = r.Item(UserAccess.strFullname.ColumnName)
-                        UserAccess.intAccessLevel = r.Item(UserAccess.intAccessLevel.ColumnName)
-                        UserAccess.strUID = r.Item(UserAccess.strUID.ColumnName)
+                        UserAccess.strUsername.Value = r.Item(UserAccess.strUsername.ColumnName)
+                        UserAccess.strFullname.Value = r.Item(UserAccess.strFullname.ColumnName)
+                        UserAccess.intAccessLevel.Value = r.Item(UserAccess.intAccessLevel.ColumnName)
+                        UserAccess.strUID.Value = r.Item(UserAccess.strUID.ColumnName)
                     Next
                 Else
                     UserAccess.intAccessLevel.Value = 0

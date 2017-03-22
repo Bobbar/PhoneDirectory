@@ -10,6 +10,13 @@ Public Class User_Info
     Public intAccessLevel As New DBColumn("usr_access_level")
     Public strUID As New DBColumn("usr_UID")
 End Class
+Public Class Extension_Info
+    Public Const TableName As String = "extensions"
+    Public ID As New DBColumn("id")
+    Public Extension As New DBColumn("extension")
+    Public ExtensionName As New DBColumn("user")
+End Class
+
 Public Class DBColumn
     Public Value As Object
     Public ColumnName As String
