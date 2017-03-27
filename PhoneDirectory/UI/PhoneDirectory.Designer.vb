@@ -23,6 +23,7 @@ Partial Class PhoneDirectory
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PhoneDirectory))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdClear = New System.Windows.Forms.Button()
@@ -70,7 +71,7 @@ Partial Class PhoneDirectory
         'cmdSearch
         '
         Me.cmdSearch.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdSearch.Location = New System.Drawing.Point(175, 124)
+        Me.cmdSearch.Location = New System.Drawing.Point(188, 124)
         Me.cmdSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdSearch.Name = "cmdSearch"
         Me.cmdSearch.Size = New System.Drawing.Size(168, 51)
@@ -157,8 +158,16 @@ Partial Class PhoneDirectory
         Me.ExtensionGrid.Margin = New System.Windows.Forms.Padding(4)
         Me.ExtensionGrid.Name = "ExtensionGrid"
         Me.ExtensionGrid.ReadOnly = True
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ExtensionGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.ExtensionGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        Me.ExtensionGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.ExtensionGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.ExtensionGrid.Size = New System.Drawing.Size(528, 303)
         Me.ExtensionGrid.TabIndex = 0
         '

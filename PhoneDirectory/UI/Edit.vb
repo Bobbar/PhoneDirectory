@@ -49,7 +49,7 @@ Public Class Edit
     End Function
     Private Sub GetExtension(ExtID As Integer)
         Try
-            Dim strQRY As String = "SELECT * FROM " & Extension_Info.TableName & " WHERE " & MyExtension.ID.ColumnName & "='" & ExtID & "'"
+            Dim strQRY As String = "SELECT * FROM " & MyExtension.TableName & " WHERE " & MyExtension.ID.ColumnName & "='" & ExtID & "'"
             Using SQLComms As New clsMySQL_Comms,
                 results As DataTable = SQLComms.Return_SQLTable(strQRY)
                 With results.Rows(0)
