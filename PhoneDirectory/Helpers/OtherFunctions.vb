@@ -1,6 +1,7 @@
 ﻿Imports System.Environment
 Imports System.IO
 Imports System.Runtime.InteropServices
+Imports MyDialogLib
 Module OtherFunctions
     Public Sub EndProgram()
         'ProgramEnding = True
