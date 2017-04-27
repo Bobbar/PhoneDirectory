@@ -16,7 +16,12 @@ Public Class Extension_Info
     Public Extension As New DBColumn_String("extension")
     Public ExtensionName As New DBColumn_String("user")
 End Class
-
+Public Class Extension_Table
+    Public Const TableName As String = "extensions"
+    Public Const ID As String = "id"
+    Public Const Extension As String = "extension"
+    Public Const ExtensionName As String = "user"
+End Class
 Public Class DBColumn_String
     Public Value As String
     Public ColumnName As String
@@ -29,6 +34,11 @@ Public Class DBColumn_String
         Value = nValue
         ColumnName = nColumnName
     End Sub
+    Public ReadOnly Property cName As String
+        Get
+            Return ColumnName
+        End Get
+    End Property
 End Class
 Public Class DBColumn_Integer
     Public Value As Integer

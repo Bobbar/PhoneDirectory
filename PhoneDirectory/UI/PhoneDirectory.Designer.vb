@@ -28,8 +28,8 @@ Partial Class PhoneDirectory
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdClear = New System.Windows.Forms.Button()
         Me.cmdSearch = New System.Windows.Forms.Button()
-        Me.txtExtName = New System.Windows.Forms.TextBox()
-        Me.txtExtension = New System.Windows.Forms.TextBox()
+        Me.txtExtName = New MyTextBox()
+        Me.txtExtension = New MyTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -195,8 +195,8 @@ Partial Class PhoneDirectory
 
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents txtExtName As TextBox
-    Friend WithEvents txtExtension As TextBox
+    Friend WithEvents txtExtName As MyTextBox
+    Friend WithEvents txtExtension As MyTextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdSearch As Button

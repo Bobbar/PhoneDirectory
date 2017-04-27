@@ -26,9 +26,9 @@ Partial Class Edit
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.cmdSave = New System.Windows.Forms.Button()
-        Me.txtExtensionName = New System.Windows.Forms.TextBox()
-        Me.txtExtension = New System.Windows.Forms.TextBox()
-        Me.txtID = New System.Windows.Forms.TextBox()
+        Me.txtExtensionName = New PhoneDirectory.MyTextBox()
+        Me.txtExtension = New PhoneDirectory.MyTextBox()
+        Me.txtID = New PhoneDirectory.MyTextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -76,6 +76,7 @@ Partial Class Edit
         '
         'txtExtensionName
         '
+        Me.txtExtensionName.DataColumn = Nothing
         Me.txtExtensionName.Location = New System.Drawing.Point(324, 55)
         Me.txtExtensionName.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtensionName.Name = "txtExtensionName"
@@ -84,6 +85,7 @@ Partial Class Edit
         '
         'txtExtension
         '
+        Me.txtExtension.DataColumn = Nothing
         Me.txtExtension.Location = New System.Drawing.Point(134, 55)
         Me.txtExtension.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtension.Name = "txtExtension"
@@ -92,7 +94,8 @@ Partial Class Edit
         '
         'txtID
         '
-        Me.txtID.Location = New System.Drawing.Point(19, 55)
+        Me.txtID.DataColumn = Nothing
+        Me.txtID.Location = New System.Drawing.Point(26, 55)
         Me.txtID.Margin = New System.Windows.Forms.Padding(4)
         Me.txtID.Name = "txtID"
         Me.txtID.ReadOnly = True
@@ -122,7 +125,7 @@ Partial Class Edit
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(15, 33)
+        Me.Label1.Location = New System.Drawing.Point(22, 33)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(24, 18)
@@ -156,7 +159,7 @@ Partial Class Edit
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdCancel As Button
     Friend WithEvents cmdSave As Button
-    Friend WithEvents txtExtensionName As TextBox
-    Friend WithEvents txtExtension As TextBox
-    Friend WithEvents txtID As TextBox
+    Friend WithEvents txtExtensionName As PhoneDirectory.MyTextBox
+    Friend WithEvents txtExtension As PhoneDirectory.MyTextBox
+    Friend WithEvents txtID As PhoneDirectory.MyTextBox
 End Class

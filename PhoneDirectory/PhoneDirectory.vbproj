@@ -133,6 +133,12 @@
     <Compile Include="Helpers\ExtendedMethods.vb" />
     <Compile Include="Helpers\OtherFunctions.vb" />
     <Compile Include="UI\Controls\clsLiveBox.vb" />
+    <Compile Include="UI\Controls\MyTextBox.Designer.vb">
+      <DependentUpon>MyTextBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\MyTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Edit.Designer.vb">
       <DependentUpon>Edit.vb</DependentUpon>
     </Compile>

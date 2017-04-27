@@ -4,9 +4,14 @@ Imports MySql.Data.MySqlClient
 Public Class PhoneDirectory
     Private LastCommand As MySqlCommand
     Private Sub LoadProgram()
+        SetDBColumns()
         GetUserAccess()
         GetAccessLevels()
         ExtendedMethods.DoubleBuffered(ExtensionGrid, True)
+    End Sub
+    Private Sub SetDBColumns()
+        txtExtension.DataColumn = Extension_Table.Extension
+        txtExtName.DataColumn = Extension_Table.ExtensionName
     End Sub
     Public Sub RefreshCurrent()
         StartQuery(LastCommand)
@@ -51,9 +56,32 @@ Public Class PhoneDirectory
     Private Function BuildSearchListNew() As List(Of SearchVal)
         Dim MyExtInfo As New Extension_Info
         Dim tmpList As New List(Of SearchVal)
-        tmpList.Add(New SearchVal(MyExtInfo.Extension.ColumnName, Trim(txtExtension.Text)))
-        tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
+        Dim DBCtl As New List(Of Control)
+        DBCtl = GetDataControls(Me, DBCtl)
+        For Each ctl As Control In DBCtl
+            Select Case True
+                Case TypeOf ctl Is MyTextBox
+                    Dim txt As MyTextBox = DirectCast(ctl, MyTextBox)
+                    tmpList.Add(New SearchVal(txt.DataColumn, Trim(txt.Text)))
+            End Select
+
+        Next
+
+        'tmpList.Add(New SearchVal(MyExtInfo.Extension.ColumnName, Trim(txtExtension.Text)))
+        'tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
         Return tmpList
+    End Function
+    Private Function GetDataControls(ParentControl As Control, NewList As List(Of Control)) As List(Of Control)
+        For Each ctl As Control In ParentControl.Controls
+            If TypeOf ctl Is MyTextBox Then
+                NewList.Add(ctl)
+            Else
+                If ctl.HasChildren Then
+                    GetDataControls(ctl, NewList)
+                End If
+            End If
+        Next
+        Return NewList
     End Function
     Private Sub SendToGrid(Results As DataTable)
         Try
