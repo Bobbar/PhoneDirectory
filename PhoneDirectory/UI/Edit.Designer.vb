@@ -26,9 +26,9 @@ Partial Class Edit
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.cmdSave = New System.Windows.Forms.Button()
-        Me.txtExtensionName = New PhoneDirectory.MyTextBox()
-        Me.txtExtension = New PhoneDirectory.MyTextBox()
-        Me.txtID = New PhoneDirectory.MyTextBox()
+        Me.txtExtensionName = New MyTextBox()
+        Me.txtExtension = New MyTextBox()
+        Me.txtID = New MyTextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -159,7 +159,7 @@ Partial Class Edit
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdCancel As Button
     Friend WithEvents cmdSave As Button
-    Friend WithEvents txtExtensionName As PhoneDirectory.MyTextBox
-    Friend WithEvents txtExtension As PhoneDirectory.MyTextBox
-    Friend WithEvents txtID As PhoneDirectory.MyTextBox
+    Friend WithEvents txtExtensionName As MyTextBox
+    Friend WithEvents txtExtension As MyTextBox
+    Friend WithEvents txtID As MyTextBox
 End Class

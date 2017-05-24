@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports MyDialogLib
 Module OtherFunctions
+    Public stpw As New Stopwatch
     Public Sub EndProgram()
         'ProgramEnding = True
         Logger("Ending Program...")
@@ -46,5 +47,18 @@ Module OtherFunctions
     Public Function Message(ByVal Prompt As String, Optional ByVal Buttons As Integer = vbOKOnly + vbInformation, Optional ByVal Title As String = Nothing, Optional ByVal ParentFrm As Form = Nothing) As MsgBoxResult
         Dim NewMessage As New MyDialog(ParentFrm)
         Return NewMessage.DialogMessage(Prompt, Buttons, Title, ParentFrm)
+    End Function
+    Public Sub StartTimer()
+        stpw.Stop()
+        stpw.Reset()
+        stpw.Start()
+    End Sub
+    Private intTimerHits As Integer = 0
+    Public Function StopTimer()
+        stpw.Stop()
+        intTimerHits += 1
+        Dim Results As String = intTimerHits & "  Stopwatch: MS:" & stpw.ElapsedMilliseconds & " Ticks: " & stpw.ElapsedTicks
+        Debug.Print(Results)
+        Return Results
     End Function
 End Module

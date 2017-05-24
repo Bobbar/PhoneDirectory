@@ -17,9 +17,10 @@ Public Class PhoneDirectory
         StartQuery(LastCommand)
     End Sub
     Public Sub SearchExtension()
+
         Dim cmd As New MySqlCommand
         Dim MyExtInfo As New Extension_Info
-        Dim strStartQry As String = "SELECT * FROM " & Extension_Info.TableName & " WHERE "
+        Dim strStartQry As String = "SELECT * FROM " & Extension_Info.TableName & " WHERE"
         Dim strDynaQry As String
         Dim SearchValCol As List(Of SearchVal) = BuildSearchListNew()
         For Each fld As SearchVal In SearchValCol
@@ -31,27 +32,32 @@ Public Class PhoneDirectory
             End If
         Next
         If strDynaQry = "" Then
-            Dim blah = Message("Please add some filter data.", vbOKOnly + vbInformation, "Fields Missing", Me)
+            Clear()
+            '  Dim blah = Message("Please add some filter data.", vbOKOnly + vbInformation, "Fields Missing", Me)
             Exit Sub
         End If
         Dim strQry = strStartQry & strDynaQry
         If Strings.Right(strQry, 3) = "AND" Then 'remove trailing AND from dynamic query
             strQry = Strings.Left(strQry, Strings.Len(strQry) - 3)
         End If
+        strQry += " LIMIT 30"
         cmd.CommandText = strQry
         LastCommand = cmd
         StartQuery(cmd)
     End Sub
-    Private Sub StartQuery(ByRef QryCommand As MySqlCommand)
-        Using LocalSQLComm As New clsMySQL_Comms,
-                ds As New DataSet,
+    Private Async Sub StartQuery(QryCommand As MySqlCommand)
+        Dim Results = Await Task.Run(Function()
+                                         Using LocalSQLComm As New clsMySQL_Comms,
+                tmpResults As New DataTable,
                 da As New MySqlDataAdapter,
                 QryComm As MySqlCommand = QryCommand
-            QryComm.Connection = LocalSQLComm.Connection
-            da.SelectCommand = QryComm
-            da.Fill(ds)
-            SendToGrid(ds.Tables(0))
-        End Using
+                                             QryComm.Connection = LocalSQLComm.Connection
+                                             da.SelectCommand = QryComm
+                                             da.Fill(tmpResults)
+                                             Return tmpResults
+                                         End Using
+                                     End Function)
+        SendToGrid(Results)
     End Sub
     Private Function BuildSearchListNew() As List(Of SearchVal)
         Dim MyExtInfo As New Extension_Info
@@ -128,18 +134,25 @@ Public Class PhoneDirectory
     Private Sub PhoneDirectory_Load(sender As Object, e As EventArgs) Handles Me.Load
         LoadProgram()
     End Sub
-    Private Sub txtExtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtName.KeyDown
-        If e.KeyCode = Keys.Return Then
-            SearchExtension()
-        End If
-    End Sub
-    Private Sub txtExtension_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtension.KeyDown
-        If e.KeyCode = Keys.Return Then
-            SearchExtension()
-        End If
-    End Sub
+    'Private Sub txtExtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtName.KeyDown
+    '    If e.KeyCode = Keys.Return Then
+    '        SearchExtension()
+    '    End If
+    'End Sub
+    'Private Sub txtExtension_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtension.KeyDown
+    '    If e.KeyCode = Keys.Return Then
+    '        SearchExtension()
+    '    End If
+    'End Sub
     Private Sub ExtensionGrid_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ExtensionGrid.CellDoubleClick
         If CheckForAccess(AccessGroup.Modify) Then Dim nEdit As New Edit(CInt(ExtensionGrid.SelectedCells(0).OwningRow.HeaderCell.Value))
     End Sub
 
+    Private Sub txtExtension_KeyUp(sender As Object, e As KeyEventArgs) Handles txtExtension.KeyUp
+        SearchExtension()
+    End Sub
+
+    Private Sub txtExtName_KeyUp(sender As Object, e As KeyEventArgs) Handles txtExtName.KeyUp
+        SearchExtension()
+    End Sub
 End Class
