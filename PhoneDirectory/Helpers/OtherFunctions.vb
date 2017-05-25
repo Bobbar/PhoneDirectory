@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports MyDialogLib
+Imports System.Text.RegularExpressions
 Module OtherFunctions
     Public stpw As New Stopwatch
     Public Sub EndProgram()
@@ -60,5 +61,9 @@ Module OtherFunctions
         Dim Results As String = intTimerHits & "  Stopwatch: MS:" & stpw.ElapsedMilliseconds & " Ticks: " & stpw.ElapsedTicks
         Debug.Print(Results)
         Return Results
+    End Function
+    Public Function CleanDBValue(Value As String) As Object
+        Dim CleanString As String = Regex.Replace(Trim(Value), "[/\r?\n|\r/g]+", String.Empty)
+        Return IIf(CleanString = String.Empty, DBNull.Value, CleanString)
     End Function
 End Module

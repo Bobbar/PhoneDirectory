@@ -28,12 +28,14 @@ Partial Class PhoneDirectory
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdClear = New System.Windows.Forms.Button()
         Me.cmdSearch = New System.Windows.Forms.Button()
-        Me.txtExtName = New MyTextBox()
-        Me.txtExtension = New MyTextBox()
+        Me.txtExtName = New System.Windows.Forms.TextBox()
+        Me.txtExtension = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.ExtensionGrid = New System.Windows.Forms.DataGridView()
+        Me.txtDepartment = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.ExtensionGrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -43,6 +45,8 @@ Partial Class PhoneDirectory
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.txtDepartment)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.cmdClear)
         Me.GroupBox1.Controls.Add(Me.cmdSearch)
         Me.GroupBox1.Controls.Add(Me.txtExtName)
@@ -53,7 +57,7 @@ Partial Class PhoneDirectory
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox1.Size = New System.Drawing.Size(544, 206)
+        Me.GroupBox1.Size = New System.Drawing.Size(840, 206)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Search"
@@ -61,7 +65,7 @@ Partial Class PhoneDirectory
         'cmdClear
         '
         Me.cmdClear.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmdClear.Location = New System.Drawing.Point(436, 158)
+        Me.cmdClear.Location = New System.Drawing.Point(732, 158)
         Me.cmdClear.Name = "cmdClear"
         Me.cmdClear.Size = New System.Drawing.Size(99, 37)
         Me.cmdClear.TabIndex = 5
@@ -71,7 +75,7 @@ Partial Class PhoneDirectory
         'cmdSearch
         '
         Me.cmdSearch.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdSearch.Location = New System.Drawing.Point(188, 124)
+        Me.cmdSearch.Location = New System.Drawing.Point(336, 124)
         Me.cmdSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdSearch.Name = "cmdSearch"
         Me.cmdSearch.Size = New System.Drawing.Size(168, 51)
@@ -82,7 +86,7 @@ Partial Class PhoneDirectory
         'txtExtName
         '
         Me.txtExtName.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.txtExtName.Location = New System.Drawing.Point(251, 62)
+        Me.txtExtName.Location = New System.Drawing.Point(272, 62)
         Me.txtExtName.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtName.Name = "txtExtName"
         Me.txtExtName.Size = New System.Drawing.Size(212, 25)
@@ -91,7 +95,7 @@ Partial Class PhoneDirectory
         'txtExtension
         '
         Me.txtExtension.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.txtExtension.Location = New System.Drawing.Point(80, 62)
+        Me.txtExtension.Location = New System.Drawing.Point(101, 62)
         Me.txtExtension.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtension.Name = "txtExtension"
         Me.txtExtension.Size = New System.Drawing.Size(137, 25)
@@ -101,7 +105,7 @@ Partial Class PhoneDirectory
         '
         Me.Label2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(247, 40)
+        Me.Label2.Location = New System.Drawing.Point(268, 40)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(160, 18)
@@ -112,7 +116,7 @@ Partial Class PhoneDirectory
         '
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(76, 40)
+        Me.Label1.Location = New System.Drawing.Point(97, 40)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(80, 18)
@@ -130,7 +134,7 @@ Partial Class PhoneDirectory
         Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox2.Size = New System.Drawing.Size(544, 335)
+        Me.GroupBox2.Size = New System.Drawing.Size(840, 335)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Results"
@@ -160,7 +164,7 @@ Partial Class PhoneDirectory
         Me.ExtensionGrid.ReadOnly = True
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Silver
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -168,14 +172,34 @@ Partial Class PhoneDirectory
         Me.ExtensionGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.ExtensionGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.ExtensionGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.ExtensionGrid.Size = New System.Drawing.Size(528, 303)
+        Me.ExtensionGrid.Size = New System.Drawing.Size(824, 303)
         Me.ExtensionGrid.TabIndex = 0
+        '
+        'txtDepartment
+        '
+        Me.txtDepartment.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.txtDepartment.Location = New System.Drawing.Point(528, 62)
+        Me.txtDepartment.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtDepartment.Name = "txtDepartment"
+        Me.txtDepartment.Size = New System.Drawing.Size(212, 25)
+        Me.txtDepartment.TabIndex = 7
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(524, 40)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(88, 18)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "Department"
         '
         'PhoneDirectory
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(570, 574)
+        Me.ClientSize = New System.Drawing.Size(866, 574)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -195,11 +219,13 @@ Partial Class PhoneDirectory
 
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents txtExtName As MyTextBox
-    Friend WithEvents txtExtension As MyTextBox
+    Friend WithEvents txtExtName As TextBox
+    Friend WithEvents txtExtension As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdSearch As Button
     Friend WithEvents ExtensionGrid As DataGridView
     Friend WithEvents cmdClear As Button
+    Friend WithEvents txtDepartment As TextBox
+    Friend WithEvents Label3 As Label
 End Class

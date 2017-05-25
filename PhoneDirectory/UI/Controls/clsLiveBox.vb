@@ -81,7 +81,7 @@ Public Class clsLiveBox : Implements IDisposable
         Dim strSearchString As String = DirectCast(e.Argument, String)
         strPrevSearchString = strSearchString
         Dim strQry As String
-        strQry = "SELECT * FROM " & Extension_Info.TableName & " WHERE " & CurrentLiveBoxArgs.ViewMember & " LIKE CONCAT('%', @Search_Value, '%') GROUP BY " & CurrentLiveBoxArgs.ViewMember & " ORDER BY " & CurrentLiveBoxArgs.ViewMember & " LIMIT " & RowLimit
+        strQry = "SELECT * FROM " & Extension_Columns.TableName & " WHERE " & CurrentLiveBoxArgs.ViewMember & " LIKE CONCAT('%', @Search_Value, '%') GROUP BY " & CurrentLiveBoxArgs.ViewMember & " ORDER BY " & CurrentLiveBoxArgs.ViewMember & " LIMIT " & RowLimit
         Using MySQLComms As New clsMySQL_Comms, ds As New DataSet, da As New MySqlDataAdapter, cmd As MySqlCommand = MySQLComms.Return_SQLCommand(strQry)
             cmd.Parameters.AddWithValue("@Search_Value", strSearchString)
             da.SelectCommand = cmd
@@ -94,7 +94,7 @@ Public Class clsLiveBox : Implements IDisposable
             DrawLiveBox(e.Result)
             LiveBoxResults = e.Result
         Else
-            ErrHandle(e.Error, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(e.Error, System.Reflection.MethodInfo.GetCurrentMethod())
         End If
     End Sub
     Private Sub DrawLiveBox(dtResults As DataTable)

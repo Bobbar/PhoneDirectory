@@ -26,17 +26,21 @@ Partial Class Edit
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.cmdSave = New System.Windows.Forms.Button()
-        Me.txtExtensionName = New MyTextBox()
-        Me.txtExtension = New MyTextBox()
-        Me.txtID = New MyTextBox()
+        Me.txtExtensionName = New System.Windows.Forms.TextBox()
+        Me.txtExtension = New System.Windows.Forms.TextBox()
+        Me.txtID = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtDepartment = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.txtDepartment)
+        Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.cmdCancel)
         Me.GroupBox1.Controls.Add(Me.cmdSave)
         Me.GroupBox1.Controls.Add(Me.txtExtensionName)
@@ -49,7 +53,7 @@ Partial Class Edit
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox1.Size = New System.Drawing.Size(600, 241)
+        Me.GroupBox1.Size = New System.Drawing.Size(852, 241)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -76,7 +80,6 @@ Partial Class Edit
         '
         'txtExtensionName
         '
-        Me.txtExtensionName.DataColumn = Nothing
         Me.txtExtensionName.Location = New System.Drawing.Point(324, 55)
         Me.txtExtensionName.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtensionName.Name = "txtExtensionName"
@@ -85,7 +88,6 @@ Partial Class Edit
         '
         'txtExtension
         '
-        Me.txtExtension.DataColumn = Nothing
         Me.txtExtension.Location = New System.Drawing.Point(134, 55)
         Me.txtExtension.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtension.Name = "txtExtension"
@@ -94,7 +96,6 @@ Partial Class Edit
         '
         'txtID
         '
-        Me.txtID.DataColumn = Nothing
         Me.txtID.Location = New System.Drawing.Point(26, 55)
         Me.txtID.Margin = New System.Windows.Forms.Padding(4)
         Me.txtID.Name = "txtID"
@@ -132,11 +133,29 @@ Partial Class Edit
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "ID"
         '
+        'txtDepartment
+        '
+        Me.txtDepartment.Location = New System.Drawing.Point(592, 55)
+        Me.txtDepartment.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtDepartment.Name = "txtDepartment"
+        Me.txtDepartment.Size = New System.Drawing.Size(228, 25)
+        Me.txtDepartment.TabIndex = 9
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(588, 33)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(88, 18)
+        Me.Label4.TabIndex = 8
+        Me.Label4.Text = "Department"
+        '
         'Edit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(627, 265)
+        Me.ClientSize = New System.Drawing.Size(945, 265)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -159,7 +178,9 @@ Partial Class Edit
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdCancel As Button
     Friend WithEvents cmdSave As Button
-    Friend WithEvents txtExtensionName As MyTextBox
-    Friend WithEvents txtExtension As MyTextBox
-    Friend WithEvents txtID As MyTextBox
+    Friend WithEvents txtExtensionName As TextBox
+    Friend WithEvents txtExtension As TextBox
+    Friend WithEvents txtID As TextBox
+    Friend WithEvents txtDepartment As TextBox
+    Friend WithEvents Label4 As Label
 End Class

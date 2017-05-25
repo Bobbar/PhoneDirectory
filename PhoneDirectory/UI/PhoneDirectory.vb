@@ -3,6 +3,7 @@ Option Strict On
 Imports MySql.Data.MySqlClient
 Public Class PhoneDirectory
     Private LastCommand As MySqlCommand
+    Private DataParser As New DBControlParser
     Private Sub LoadProgram()
         SetDBColumns()
         GetUserAccess()
@@ -10,8 +11,13 @@ Public Class PhoneDirectory
         ExtendedMethods.DoubleBuffered(ExtensionGrid, True)
     End Sub
     Private Sub SetDBColumns()
-        txtExtension.DataColumn = Extension_Table.Extension
-        txtExtName.DataColumn = Extension_Table.ExtensionName
+        'txtExtension.DataColumn = Extension_Table.Extension
+        'txtExtName.DataColumn = Extension_Table.ExtensionName
+        txtExtension.Tag = New DBControlInfo(Extension_Columns.Extension)
+        txtExtName.Tag = New DBControlInfo(Extension_Columns.Name)
+        txtDepartment.Tag = New DBControlInfo(Extension_Columns.Department)
+
+
     End Sub
     Public Sub RefreshCurrent()
         StartQuery(LastCommand)
@@ -19,8 +25,8 @@ Public Class PhoneDirectory
     Public Sub SearchExtension()
 
         Dim cmd As New MySqlCommand
-        Dim MyExtInfo As New Extension_Info
-        Dim strStartQry As String = "SELECT * FROM " & Extension_Info.TableName & " WHERE"
+
+        Dim strStartQry As String = "SELECT * FROM " & Extension_Columns.TableName & " WHERE"
         Dim strDynaQry As String
         Dim SearchValCol As List(Of SearchVal) = BuildSearchListNew()
         For Each fld As SearchVal In SearchValCol
@@ -59,16 +65,34 @@ Public Class PhoneDirectory
                                      End Function)
         SendToGrid(Results)
     End Sub
+    'Private Function BuildSearchListNew() As List(Of SearchVal)
+    '    Dim MyExtInfo As New Extension_Info
+    '    Dim tmpList As New List(Of SearchVal)
+    '    Dim DBCtl As New List(Of Control)
+    '    DBCtl = GetDataControls(Me, DBCtl)
+    '    For Each ctl As Control In DBCtl
+    '        Select Case True
+    '            Case TypeOf ctl Is MyTextBox
+    '                Dim txt As MyTextBox = DirectCast(ctl, MyTextBox)
+    '                tmpList.Add(New SearchVal(txt.DataColumn, Trim(txt.Text)))
+    '        End Select
+
+    '    Next
+
+    '    'tmpList.Add(New SearchVal(MyExtInfo.Extension.ColumnName, Trim(txtExtension.Text)))
+    '    'tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
+    '    Return tmpList
+    'End Function
     Private Function BuildSearchListNew() As List(Of SearchVal)
-        Dim MyExtInfo As New Extension_Info
         Dim tmpList As New List(Of SearchVal)
         Dim DBCtl As New List(Of Control)
-        DBCtl = GetDataControls(Me, DBCtl)
+        DataParser.GetDBControls(Me, DBCtl) 'GetDataControls(Me, DBCtl)
         For Each ctl As Control In DBCtl
             Select Case True
-                Case TypeOf ctl Is MyTextBox
-                    Dim txt As MyTextBox = DirectCast(ctl, MyTextBox)
-                    tmpList.Add(New SearchVal(txt.DataColumn, Trim(txt.Text)))
+                Case TypeOf ctl Is TextBox
+                    Dim DBInfo As DBControlInfo = DirectCast(ctl.Tag, DBControlInfo)
+                    Dim txt As TextBox = DirectCast(ctl, TextBox)
+                    tmpList.Add(New SearchVal(DBInfo.DataColumn, Trim(txt.Text)))
             End Select
 
         Next
@@ -77,36 +101,37 @@ Public Class PhoneDirectory
         'tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
         Return tmpList
     End Function
-    Private Function GetDataControls(ParentControl As Control, NewList As List(Of Control)) As List(Of Control)
-        For Each ctl As Control In ParentControl.Controls
-            If TypeOf ctl Is MyTextBox Then
-                NewList.Add(ctl)
-            Else
-                If ctl.HasChildren Then
-                    GetDataControls(ctl, NewList)
-                End If
-            End If
-        Next
-        Return NewList
-    End Function
+    'Private Function GetDataControls(ParentControl As Control, NewList As List(Of Control)) As List(Of Control)
+    '    For Each ctl As Control In ParentControl.Controls
+    '        If TypeOf ctl Is MyTextBox Then
+    '            NewList.Add(ctl)
+    '        Else
+    '            If ctl.HasChildren Then
+    '                GetDataControls(ctl, NewList)
+    '            End If
+    '        End If
+    '    Next
+    '    Return NewList
+    'End Function
     Private Sub SendToGrid(Results As DataTable)
         Try
-            Dim MyExtInfo As New Extension_Info
+
             If Results Is Nothing Then Exit Sub
             SetupGrid()
             ExtensionGrid.Visible = False
             For Each r As DataRow In Results.Rows
                 With ExtensionGrid.Rows
-                    .Add(r.Item(MyExtInfo.Extension.ColumnName),
-                              r.Item(MyExtInfo.ExtensionName.ColumnName))
-                    ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).HeaderCell.Value = r.Item(MyExtInfo.ID.ColumnName).ToString
+                    .Add(r.Item(Extension_Columns.Extension),
+                              r.Item(Extension_Columns.Name),
+                         r.Item(Extension_Columns.Department))
+                    ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).HeaderCell.Value = r.Item(Extension_Columns.ID).ToString
                 End With
             Next
             ExtensionGrid.ClearSelection()
             ExtensionGrid.Visible = True
             ExtensionGrid.ResumeLayout()
         Catch ex As Exception
-            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
         End Try
     End Sub
     Private Sub SetupGrid()
@@ -116,6 +141,7 @@ Public Class PhoneDirectory
         With ExtensionGrid.Columns
             .Add("Extension", "Extension")
             .Add("Extension Name", "Extension Name")
+            .Add("Department", "Department")
         End With
         ExtensionGrid.TopLeftHeaderCell.Value = "ID"
         ExtensionGrid.RowHeadersWidth = 70

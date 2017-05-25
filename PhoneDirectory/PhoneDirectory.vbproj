@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="Classes\clsCrypto.vb" />
     <Compile Include="Classes\Constants.vb" />
+    <Compile Include="Classes\DBControlParser.vb" />
     <Compile Include="Classes\Global_Instances.vb" />
     <Compile Include="Classes\modSecurityMod.vb" />
     <Compile Include="Classes\MyExceptions.vb" />
@@ -135,7 +136,7 @@
     <Compile Include="Helpers\ExtendedMethods.vb" />
     <Compile Include="Helpers\OtherFunctions.vb" />
     <Compile Include="UI\Controls\clsLiveBox.vb" />
-    <Compile Include="UI\Controls\MyTextBox.Designer.vb">
+    <Compile Include="UI\Controls\MyTextBox.designer.vb">
       <DependentUpon>MyTextBox.vb</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\MyTextBox.vb">

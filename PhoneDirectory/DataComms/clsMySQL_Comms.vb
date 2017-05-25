@@ -33,7 +33,7 @@ Public Class clsMySQL_Comms : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 #End Region
-    Private Const strDatabase As String = "phone_directory"
+    Private Const strDatabase As String = "phone_test_db" '"phone_directory"
     Private Const EncMySqlPass As String = "5LwNVhnM3bvJrhzc+xFFx9nbMkH6oYkAuBTScy9bRL/QKY55txdAHQ=="
     Private MySQLConnectString As String = "server=" & strServerIP & ";uid=phone_dir_user;pwd=" & DecodePassword(EncMySqlPass) & ";database=" & strDatabase & ";ConnectionTimeout=5"
     Private ConnectionException As Exception
@@ -52,15 +52,14 @@ Public Class clsMySQL_Comms : Implements IDisposable
     Public Function Return_SQLTable(strSQLQry As String) As DataTable
         'Debug.Print("Table Hit " & Date.Now.Ticks)
         Try
-            Using ds As New DataSet, da As New MySqlDataAdapter
+            Using da As New MySqlDataAdapter, tmpTable As New DataTable
                 da.SelectCommand = New MySqlCommand(strSQLQry)
                 da.SelectCommand.Connection = Connection
-                da.Fill(ds)
-                da.Dispose()
-                Return ds.Tables(0)
+                da.Fill(tmpTable)
+                Return tmpTable
             End Using
         Catch ex As Exception
-            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
             Return Nothing
         End Try
     End Function
@@ -71,11 +70,11 @@ Public Class clsMySQL_Comms : Implements IDisposable
                 Return cmd.ExecuteReader
             End Using
         Catch ex As Exception
-            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
             Return Nothing
         End Try
     End Function
-    Public Function Return_SQLCommand(strSQLQry As String) As MySqlCommand
+    Public Function Return_SQLCommand(Optional strSQLQry As String = "") As MySqlCommand
         'Debug.Print("Command Hit " & Date.Now.Ticks)
         Try
             Using cmd As New MySqlCommand
@@ -84,7 +83,7 @@ Public Class clsMySQL_Comms : Implements IDisposable
                 Return cmd
             End Using
         Catch ex As Exception
-            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
             Return Nothing
         End Try
     End Function
@@ -92,15 +91,23 @@ Public Class clsMySQL_Comms : Implements IDisposable
         'Debug.Print("Command Hit " & Date.Now.Ticks)
         Try
             Dim adapter As New MySqlDataAdapter(strSQLQry, MySQLConnectString)
+            Dim CmdBuilder As New MySqlCommandBuilder(adapter)
             Return adapter
         Catch ex As Exception
-            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod().Name)
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
             Return Nothing
         End Try
     End Function
     Private Function NewConnection() As MySqlConnection
         Return New MySqlConnection(MySQLConnectString)
     End Function
+    'Private Function GetConnectString() As String
+    '    'If Not bolUseTestDatabase Then
+    '    Return MySQLConnectString & strDatabase
+    '    ' Else
+    '    ' Return MySQLConnectString & strTestDatabase
+    '    ' End If
+    'End Function
     Public Function OpenConnection() As Boolean
         Try
             If Connection.State <> ConnectionState.Open Then
@@ -124,5 +131,80 @@ Public Class clsMySQL_Comms : Implements IDisposable
         Connection.Close()
         Connection.Dispose()
     End Sub
+    'Public Function Return_SQLTable(strSQLQry As String) As DataTable
+    '    'Debug.Print("Table Hit " & Date.Now.Ticks)
+    '    Try
+    '        Using ds As New DataSet, da As New MySqlDataAdapter
+    '            da.SelectCommand = New MySqlCommand(strSQLQry)
+    '            da.SelectCommand.Connection = Connection
+    '            da.Fill(ds)
+    '            da.Dispose()
+    '            Return ds.Tables(0)
+    '        End Using
+    '    Catch ex As Exception
+    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+    '        Return Nothing
+    '    End Try
+    'End Function
+    'Public Function Return_SQLReader(strSQLQry As String) As MySqlDataReader
+    '    'Debug.Print("Reader Hit " & Date.Now.Ticks)
+    '    Try
+    '        Using cmd As New MySqlCommand(strSQLQry, Connection)
+    '            Return cmd.ExecuteReader
+    '        End Using
+    '    Catch ex As Exception
+    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+    '        Return Nothing
+    '    End Try
+    'End Function
+    'Public Function Return_SQLCommand(strSQLQry As String) As MySqlCommand
+    '    'Debug.Print("Command Hit " & Date.Now.Ticks)
+    '    Try
+    '        Using cmd As New MySqlCommand
+    '            cmd.Connection = Connection
+    '            cmd.CommandText = strSQLQry
+    '            Return cmd
+    '        End Using
+    '    Catch ex As Exception
+    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+    '        Return Nothing
+    '    End Try
+    'End Function
+    'Public Function Return_Adapter(strSQLQry As String) As MySqlDataAdapter
+    '    'Debug.Print("Command Hit " & Date.Now.Ticks)
+    '    Try
+    '        Dim adapter As New MySqlDataAdapter(strSQLQry, MySQLConnectString)
+    '        Return adapter
+    '    Catch ex As Exception
+    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+    '        Return Nothing
+    '    End Try
+    'End Function
+    'Private Function NewConnection() As MySqlConnection
+    '    Return New MySqlConnection(MySQLConnectString)
+    'End Function
+    'Public Function OpenConnection() As Boolean
+    '    Try
+    '        If Connection.State <> ConnectionState.Open Then
+    '            CloseConnection()
+    '            Connection = NewConnection()
+    '            Connection.Open()
+    '            '  Else
+
+    '        End If
+    '        If Connection.State = ConnectionState.Open Then
+    '            Return True
+    '        Else
+    '            Return False
+    '        End If
+    '    Catch ex As MySqlException
+    '        ConnectionException = ex
+    '        Return False
+    '    End Try
+    'End Function
+    'Public Sub CloseConnection()
+    '    Connection.Close()
+    '    Connection.Dispose()
+    'End Sub
 End Class
 
