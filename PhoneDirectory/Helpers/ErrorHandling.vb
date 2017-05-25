@@ -86,6 +86,9 @@ Module ErrorHandling
                 ' ConnectionReady()
                 Dim blah = Message("Unable to connect to server.  Check connection and try again.", vbOKOnly + vbExclamation, "Connection Lost")
                 Return True
+            Case 1062
+                Message(ex.Message)
+                Return True
             Case 1064
                 Dim blah = Message("Something went wrong with the SQL command. See log for details.  Log: " & strLogPath, vbOKOnly + vbCritical, "SQL Syntax Error")
                 Return True

@@ -11,21 +11,15 @@ Public Class PhoneDirectory
         ExtendedMethods.DoubleBuffered(ExtensionGrid, True)
     End Sub
     Private Sub SetDBColumns()
-        'txtExtension.DataColumn = Extension_Table.Extension
-        'txtExtName.DataColumn = Extension_Table.ExtensionName
         txtExtension.Tag = New DBControlInfo(Extension_Columns.Extension)
         txtExtName.Tag = New DBControlInfo(Extension_Columns.Name)
         txtDepartment.Tag = New DBControlInfo(Extension_Columns.Department)
-
-
     End Sub
     Public Sub RefreshCurrent()
         StartQuery(LastCommand)
     End Sub
     Public Sub SearchExtension()
-
         Dim cmd As New MySqlCommand
-
         Dim strStartQry As String = "SELECT * FROM " & Extension_Columns.TableName & " WHERE"
         Dim strDynaQry As String
         Dim SearchValCol As List(Of SearchVal) = BuildSearchListNew()
@@ -65,28 +59,10 @@ Public Class PhoneDirectory
                                      End Function)
         SendToGrid(Results)
     End Sub
-    'Private Function BuildSearchListNew() As List(Of SearchVal)
-    '    Dim MyExtInfo As New Extension_Info
-    '    Dim tmpList As New List(Of SearchVal)
-    '    Dim DBCtl As New List(Of Control)
-    '    DBCtl = GetDataControls(Me, DBCtl)
-    '    For Each ctl As Control In DBCtl
-    '        Select Case True
-    '            Case TypeOf ctl Is MyTextBox
-    '                Dim txt As MyTextBox = DirectCast(ctl, MyTextBox)
-    '                tmpList.Add(New SearchVal(txt.DataColumn, Trim(txt.Text)))
-    '        End Select
-
-    '    Next
-
-    '    'tmpList.Add(New SearchVal(MyExtInfo.Extension.ColumnName, Trim(txtExtension.Text)))
-    '    'tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
-    '    Return tmpList
-    'End Function
     Private Function BuildSearchListNew() As List(Of SearchVal)
         Dim tmpList As New List(Of SearchVal)
         Dim DBCtl As New List(Of Control)
-        DataParser.GetDBControls(Me, DBCtl) 'GetDataControls(Me, DBCtl)
+        DataParser.GetDBControls(Me, DBCtl)
         For Each ctl As Control In DBCtl
             Select Case True
                 Case TypeOf ctl Is TextBox
@@ -96,23 +72,8 @@ Public Class PhoneDirectory
             End Select
 
         Next
-
-        'tmpList.Add(New SearchVal(MyExtInfo.Extension.ColumnName, Trim(txtExtension.Text)))
-        'tmpList.Add(New SearchVal(MyExtInfo.ExtensionName.ColumnName, Trim(txtExtName.Text)))
         Return tmpList
     End Function
-    'Private Function GetDataControls(ParentControl As Control, NewList As List(Of Control)) As List(Of Control)
-    '    For Each ctl As Control In ParentControl.Controls
-    '        If TypeOf ctl Is MyTextBox Then
-    '            NewList.Add(ctl)
-    '        Else
-    '            If ctl.HasChildren Then
-    '                GetDataControls(ctl, NewList)
-    '            End If
-    '        End If
-    '    Next
-    '    Return NewList
-    'End Function
     Private Sub SendToGrid(Results As DataTable)
         Try
 
@@ -125,6 +86,7 @@ Public Class PhoneDirectory
                               r.Item(Extension_Columns.Name),
                          r.Item(Extension_Columns.Department))
                     ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).HeaderCell.Value = r.Item(Extension_Columns.ID).ToString
+                    ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).ContextMenuStrip = ContextMenuStrip
                 End With
             Next
             ExtensionGrid.ClearSelection()
@@ -144,11 +106,12 @@ Public Class PhoneDirectory
             .Add("Department", "Department")
         End With
         ExtensionGrid.TopLeftHeaderCell.Value = "ID"
-        ExtensionGrid.RowHeadersWidth = 70
+        ExtensionGrid.RowHeadersWidth = 100
     End Sub
     Private Sub Clear()
         txtExtension.Clear()
         txtExtName.Clear()
+        txtDepartment.Clear()
         ExtensionGrid.Rows.Clear()
     End Sub
     Private Sub cmdSearch_Click(sender As Object, e As EventArgs) Handles cmdSearch.Click
@@ -160,25 +123,33 @@ Public Class PhoneDirectory
     Private Sub PhoneDirectory_Load(sender As Object, e As EventArgs) Handles Me.Load
         LoadProgram()
     End Sub
-    'Private Sub txtExtName_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtName.KeyDown
-    '    If e.KeyCode = Keys.Return Then
-    '        SearchExtension()
-    '    End If
-    'End Sub
-    'Private Sub txtExtension_KeyDown(sender As Object, e As KeyEventArgs) Handles txtExtension.KeyDown
-    '    If e.KeyCode = Keys.Return Then
-    '        SearchExtension()
-    '    End If
-    'End Sub
-    Private Sub ExtensionGrid_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ExtensionGrid.CellDoubleClick
+    Private Sub EditSelectedExtension()
         If CheckForAccess(AccessGroup.Modify) Then Dim nEdit As New Edit(CInt(ExtensionGrid.SelectedCells(0).OwningRow.HeaderCell.Value))
     End Sub
-
+    Private Sub ExtensionGrid_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ExtensionGrid.CellDoubleClick
+        EditSelectedExtension()
+    End Sub
     Private Sub txtExtension_KeyUp(sender As Object, e As KeyEventArgs) Handles txtExtension.KeyUp
         SearchExtension()
     End Sub
-
     Private Sub txtExtName_KeyUp(sender As Object, e As KeyEventArgs) Handles txtExtName.KeyUp
         SearchExtension()
+    End Sub
+    Private Sub txtDepartment_KeyUp(sender As Object, e As KeyEventArgs) Handles txtDepartment.KeyUp
+        SearchExtension()
+    End Sub
+    Private Sub cmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
+        Dim AddNew As New Edit()
+    End Sub
+    Private Sub tsmEdit_Click(sender As Object, e As EventArgs) Handles tsmEdit.Click
+        EditSelectedExtension()
+    End Sub
+    Private Sub ExtensionGrid_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles ExtensionGrid.CellMouseDown
+        If e.ColumnIndex >= 0 And e.RowIndex >= 0 Then
+            If e.Button = MouseButtons.Right And Not ExtensionGrid.Item(e.ColumnIndex, e.RowIndex).Selected Then
+                ExtensionGrid.Rows(e.RowIndex).Selected = True
+                ExtensionGrid.CurrentCell = ExtensionGrid(e.ColumnIndex, e.RowIndex)
+            End If
+        End If
     End Sub
 End Class

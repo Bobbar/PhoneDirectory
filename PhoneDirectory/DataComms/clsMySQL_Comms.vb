@@ -101,13 +101,6 @@ Public Class clsMySQL_Comms : Implements IDisposable
     Private Function NewConnection() As MySqlConnection
         Return New MySqlConnection(MySQLConnectString)
     End Function
-    'Private Function GetConnectString() As String
-    '    'If Not bolUseTestDatabase Then
-    '    Return MySQLConnectString & strDatabase
-    '    ' Else
-    '    ' Return MySQLConnectString & strTestDatabase
-    '    ' End If
-    'End Function
     Public Function OpenConnection() As Boolean
         Try
             If Connection.State <> ConnectionState.Open Then
@@ -131,80 +124,5 @@ Public Class clsMySQL_Comms : Implements IDisposable
         Connection.Close()
         Connection.Dispose()
     End Sub
-    'Public Function Return_SQLTable(strSQLQry As String) As DataTable
-    '    'Debug.Print("Table Hit " & Date.Now.Ticks)
-    '    Try
-    '        Using ds As New DataSet, da As New MySqlDataAdapter
-    '            da.SelectCommand = New MySqlCommand(strSQLQry)
-    '            da.SelectCommand.Connection = Connection
-    '            da.Fill(ds)
-    '            da.Dispose()
-    '            Return ds.Tables(0)
-    '        End Using
-    '    Catch ex As Exception
-    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
-    '        Return Nothing
-    '    End Try
-    'End Function
-    'Public Function Return_SQLReader(strSQLQry As String) As MySqlDataReader
-    '    'Debug.Print("Reader Hit " & Date.Now.Ticks)
-    '    Try
-    '        Using cmd As New MySqlCommand(strSQLQry, Connection)
-    '            Return cmd.ExecuteReader
-    '        End Using
-    '    Catch ex As Exception
-    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
-    '        Return Nothing
-    '    End Try
-    'End Function
-    'Public Function Return_SQLCommand(strSQLQry As String) As MySqlCommand
-    '    'Debug.Print("Command Hit " & Date.Now.Ticks)
-    '    Try
-    '        Using cmd As New MySqlCommand
-    '            cmd.Connection = Connection
-    '            cmd.CommandText = strSQLQry
-    '            Return cmd
-    '        End Using
-    '    Catch ex As Exception
-    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
-    '        Return Nothing
-    '    End Try
-    'End Function
-    'Public Function Return_Adapter(strSQLQry As String) As MySqlDataAdapter
-    '    'Debug.Print("Command Hit " & Date.Now.Ticks)
-    '    Try
-    '        Dim adapter As New MySqlDataAdapter(strSQLQry, MySQLConnectString)
-    '        Return adapter
-    '    Catch ex As Exception
-    '        ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
-    '        Return Nothing
-    '    End Try
-    'End Function
-    'Private Function NewConnection() As MySqlConnection
-    '    Return New MySqlConnection(MySQLConnectString)
-    'End Function
-    'Public Function OpenConnection() As Boolean
-    '    Try
-    '        If Connection.State <> ConnectionState.Open Then
-    '            CloseConnection()
-    '            Connection = NewConnection()
-    '            Connection.Open()
-    '            '  Else
-
-    '        End If
-    '        If Connection.State = ConnectionState.Open Then
-    '            Return True
-    '        Else
-    '            Return False
-    '        End If
-    '    Catch ex As MySqlException
-    '        ConnectionException = ex
-    '        Return False
-    '    End Try
-    'End Function
-    'Public Sub CloseConnection()
-    '    Connection.Close()
-    '    Connection.Dispose()
-    'End Sub
 End Class
 

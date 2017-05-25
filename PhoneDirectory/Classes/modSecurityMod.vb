@@ -20,15 +20,6 @@ Module modSecurityMod
         Dim hash As Byte() = SHA.ComputeHash(serializedData)
         Return Convert.ToBase64String(hash)
     End Function
-    'Public Function GetHashOfDevice(Device As Device_Info) As String
-    '    Dim serializer = New DataContractSerializer(GetType(Device_Info))
-    '    Dim memoryStream = New MemoryStream()
-    '    serializer.WriteObject(memoryStream, Device)
-    '    Dim serializedData As Byte() = memoryStream.ToArray()
-    '    Dim SHA = New SHA1CryptoServiceProvider()
-    '    Dim hash As Byte() = SHA.ComputeHash(serializedData)
-    '    Return Convert.ToBase64String(hash)
-    'End Function
     Public Function GetHashOfFile(Path As String) As String
         Dim hash As MD5
         hash = MD5.Create
@@ -99,22 +90,13 @@ Module modSecurityMod
     End Function
     Public Sub GetUserAccess()
         Try
-
             Dim strQRY = "SELECT * FROM " & User_Columns.TableName & " WHERE " & User_Columns.Username & "='" & strLocalUser & "'"
             Using SQLComms As New clsMySQL_Comms, results As DataTable = SQLComms.Return_SQLTable(strQRY)
-
-
                 If results.Rows.Count > 0 Then
                     Dim r As DataRow = results.Rows(0)
                     CurrentUser = New User(r.Item(User_Columns.Username).ToString, r.Item(User_Columns.Fullname).ToString, DirectCast(r.Item(User_Columns.AccessLevel), Integer), r.Item(User_Columns.UID).ToString)
-
-                    'CurrentUser.strUsername.Value = r.Item(User_Columns.Username).ToString
-                    'CurrentUser.strFullname.Value = r.Item(User_Columns.Fullname).ToString
-                    'CurrentUser.intAccessLevel.Value = DirectCast(r.Item(User_Columns.AccessLevel), Integer)
-                    'CurrentUser.strUID.Value = r.Item(User_Columns.UID).ToString
                 Else
                     CurrentUser = New User(0)
-                    'CurrentUser.intAccessLevel.Value = 0
                 End If
             End Using
         Catch ex As Exception
