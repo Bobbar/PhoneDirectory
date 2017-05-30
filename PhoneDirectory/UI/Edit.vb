@@ -44,8 +44,6 @@ Public Class Edit
                 Me.Dispose()
                 Message("Save successful.", vbOKOnly + vbInformation, "Success", PhoneDirectory)
             End If
-        Else
-            Message("One or more required fields are empty.", vbExclamation + vbOKOnly, "Missing Info", Me)
         End If
     End Sub
     Private Sub AddNew()
@@ -55,8 +53,6 @@ Public Class Edit
                 Me.Dispose()
                 Message("New extension added.", vbOKOnly + vbInformation, "Success", PhoneDirectory)
             End If
-        Else
-            Message("One or more required fields are empty.", vbExclamation + vbOKOnly, "Missing Info", Me)
         End If
     End Sub
     Private Function ValidateData() As Boolean
@@ -74,6 +70,7 @@ Public Class Edit
                             If txt.Text <> String.Empty Then
                                 bolValid = True
                             Else
+                                Message("One or more required fields are empty." & vbCrLf & vbCrLf & "Missing field: " & ctl.Name, vbExclamation + vbOKOnly, "Missing Info", Me)
                                 Return False
                             End If
                     End Select
@@ -150,15 +147,19 @@ Public Class Edit
         End Try
     End Function
     Private Sub FormatName()
-        Dim FormattedName As String
-        Dim FirstName = Trim(txtFirstName.Text)
-        Dim LastName = Trim(txtLastName.Text)
-        If LastName = String.Empty Then
-            FormattedName = FirstName
-        Else
-            FormattedName = LastName & ", " & FirstName
-        End If
-        txtExtensionName.Text = FormattedName
+        Try
+            Dim FormattedName As String
+            Dim FirstName = Trim(txtFirstName.Text)
+            Dim LastName = Trim(txtLastName.Text)
+            If LastName = String.Empty Then
+                FormattedName = FirstName
+            Else
+                FormattedName = LastName & ", " & FirstName
+            End If
+            txtExtensionName.Text = FormattedName
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Sub
     Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
         SaveChanges()

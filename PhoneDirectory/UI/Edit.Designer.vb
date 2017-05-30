@@ -78,7 +78,7 @@ Partial Class Edit
         Me.txtLastName.MaxLength = 30
         Me.txtLastName.Name = "txtLastName"
         Me.txtLastName.Size = New System.Drawing.Size(145, 25)
-        Me.txtLastName.TabIndex = 14
+        Me.txtLastName.TabIndex = 2
         '
         'Label6
         '
@@ -97,7 +97,7 @@ Partial Class Edit
         Me.txtFirstName.MaxLength = 30
         Me.txtFirstName.Name = "txtFirstName"
         Me.txtFirstName.Size = New System.Drawing.Size(145, 25)
-        Me.txtFirstName.TabIndex = 12
+        Me.txtFirstName.TabIndex = 1
         '
         'Label5
         '
@@ -133,7 +133,7 @@ Partial Class Edit
         Me.cmdSave.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(117, 62)
-        Me.cmdSave.TabIndex = 3
+        Me.cmdSave.TabIndex = 4
         Me.cmdSave.Text = "Save"
         Me.cmdSave.UseVisualStyleBackColor = True
         '
@@ -144,7 +144,7 @@ Partial Class Edit
         Me.cmdAdd.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdAdd.Name = "cmdAdd"
         Me.cmdAdd.Size = New System.Drawing.Size(117, 62)
-        Me.cmdAdd.TabIndex = 4
+        Me.cmdAdd.TabIndex = 5
         Me.cmdAdd.Text = "Add"
         Me.cmdAdd.UseVisualStyleBackColor = True
         Me.cmdAdd.Visible = False
@@ -156,7 +156,7 @@ Partial Class Edit
         Me.txtDepartment.MaxLength = 100
         Me.txtDepartment.Name = "txtDepartment"
         Me.txtDepartment.Size = New System.Drawing.Size(228, 25)
-        Me.txtDepartment.TabIndex = 2
+        Me.txtDepartment.TabIndex = 3
         '
         'Label4
         '
@@ -175,7 +175,7 @@ Partial Class Edit
         Me.cmdCancel.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(195, 62)
-        Me.cmdCancel.TabIndex = 5
+        Me.cmdCancel.TabIndex = 8
         Me.cmdCancel.Text = "Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
@@ -189,6 +189,7 @@ Partial Class Edit
         Me.txtExtensionName.ReadOnly = True
         Me.txtExtensionName.Size = New System.Drawing.Size(312, 25)
         Me.txtExtensionName.TabIndex = 1
+        Me.txtExtensionName.TabStop = False
         '
         'txtExtension
         '
@@ -217,7 +218,7 @@ Partial Class Edit
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(120, 18)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Formatted Name"
+        Me.Label3.Text = "Extension Name"
         '
         'Label2
         '

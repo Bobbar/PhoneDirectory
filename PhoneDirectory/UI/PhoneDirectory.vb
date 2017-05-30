@@ -41,7 +41,7 @@ Public Class PhoneDirectory
             If Strings.Right(strQry, 3) = "AND" Then 'remove trailing AND from dynamic query
                 strQry = Strings.Left(strQry, Strings.Len(strQry) - 3)
             End If
-            strQry += "ORDER BY " & Extension_Columns.Name & " LIMIT 30"
+            strQry += "ORDER BY " & Extension_Columns.Name & " LIMIT 100"
             cmd.CommandText = strQry
             LastCommand = cmd
             StartQuery(cmd)
@@ -109,13 +109,17 @@ Public Class PhoneDirectory
         End Try
     End Sub
     Private Function FormatName(FirstName As Object, LastName As Object) As String
-        Dim Last As String = DirectCast(LastName, String)
-        Dim First As String = DirectCast(FirstName, String)
-        If Last <> String.Empty Then
-            Return Last & ", " & First
-        Else
-            Return First
-        End If
+        Try
+            Dim Last As String = DirectCast(NoNull(LastName), String)
+            Dim First As String = DirectCast(NoNull(FirstName), String)
+            If Last <> String.Empty Then
+                Return Last & ", " & First
+            Else
+                Return First
+            End If
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Function
     Private Sub SetupGrid()
         ExtensionGrid.DataSource = Nothing

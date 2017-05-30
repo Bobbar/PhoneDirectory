@@ -66,4 +66,12 @@ Module OtherFunctions
         Dim CleanString As String = Regex.Replace(Trim(Value), "[/\r?\n|\r]+", String.Empty)
         Return IIf(CleanString = String.Empty, DBNull.Value, CleanString)
     End Function
+    Public Function NoNull(DBVal As Object) As String
+        Try
+            Return IIf(IsDBNull(DBVal), "", DBVal.ToString).ToString
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+            Return ""
+        End Try
+    End Function
 End Module
