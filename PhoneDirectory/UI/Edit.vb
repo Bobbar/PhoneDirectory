@@ -26,13 +26,15 @@ Public Class Edit
     Private Sub InitLiveBox()
         Dim MyLiveBox As New clsLiveBox(Me)
         MyLiveBox.AttachToControl(txtDepartment, LiveBoxType.SelectValue, Extension_Columns.Department)
-        MyLiveBox.AttachToControl(txtExtensionName, LiveBoxType.SelectValue, Extension_Columns.Name)
+        '  MyLiveBox.AttachToControl(txtExtensionName, LiveBoxType.SelectValue, Extension_Columns.Name)
     End Sub
     Private Sub InitDBControls()
         txtID.Tag = New DBControlInfo(Extension_Columns.ID)
         txtExtension.Tag = New DBControlInfo(Extension_Columns.Extension, True)
         txtExtensionName.Tag = New DBControlInfo(Extension_Columns.Name, True)
         txtDepartment.Tag = New DBControlInfo(Extension_Columns.Department)
+        txtFirstName.Tag = New DBControlInfo(Extension_Columns.FirstName, True)
+        txtLastName.Tag = New DBControlInfo(Extension_Columns.LastName)
     End Sub
     Private Sub SaveChanges()
         If ValidateData() Then
@@ -147,6 +149,17 @@ Public Class Edit
             Return False
         End Try
     End Function
+    Private Sub FormatName()
+        Dim FormattedName As String
+        Dim FirstName = Trim(txtFirstName.Text)
+        Dim LastName = Trim(txtLastName.Text)
+        If LastName = String.Empty Then
+            FormattedName = FirstName
+        Else
+            FormattedName = LastName & ", " & FirstName
+        End If
+        txtExtensionName.Text = FormattedName
+    End Sub
     Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
         SaveChanges()
     End Sub
@@ -158,5 +171,11 @@ Public Class Edit
     End Sub
     Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
         AddNew()
+    End Sub
+    Private Sub txtFirstName_KeyUp(sender As Object, e As KeyEventArgs) Handles txtFirstName.KeyUp
+        FormatName()
+    End Sub
+    Private Sub txtLastName_KeyUp(sender As Object, e As KeyEventArgs) Handles txtLastName.KeyUp
+        FormatName()
     End Sub
 End Class

@@ -123,14 +123,17 @@
   <ItemGroup>
     <Compile Include="Classes\clsCrypto.vb" />
     <Compile Include="Classes\Constants.vb" />
+    <Compile Include="Classes\DataColumns.vb" />
     <Compile Include="Classes\DBControlParser.vb" />
     <Compile Include="Classes\Global_Instances.vb" />
     <Compile Include="Classes\modSecurityMod.vb" />
     <Compile Include="Classes\MyExceptions.vb" />
     <Compile Include="Classes\Paths.vb" />
+    <Compile Include="Classes\PopulateDB.vb" />
     <Compile Include="Classes\Structures.vb" />
     <Compile Include="Classes\Type_Classes.vb" />
     <Compile Include="DataComms\clsMySQL_Comms.vb" />
+    <Compile Include="DataComms\DataFunctions.vb" />
     <Compile Include="DataComms\ServerInfo.vb" />
     <Compile Include="Helpers\ErrorHandling.vb" />
     <Compile Include="Helpers\ExtendedMethods.vb" />

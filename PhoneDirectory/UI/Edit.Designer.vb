@@ -24,6 +24,10 @@ Partial Class Edit
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Edit))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtLastName = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtFirstName = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.cmdSave = New System.Windows.Forms.Button()
         Me.cmdAdd = New System.Windows.Forms.Button()
@@ -45,6 +49,10 @@ Partial Class Edit
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.txtLastName)
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.txtFirstName)
+        Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupBox1.Controls.Add(Me.txtDepartment)
         Me.GroupBox1.Controls.Add(Me.Label4)
@@ -59,13 +67,51 @@ Partial Class Edit
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(4)
-        Me.GroupBox1.Size = New System.Drawing.Size(852, 223)
+        Me.GroupBox1.Size = New System.Drawing.Size(961, 277)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
+        'txtLastName
+        '
+        Me.txtLastName.Location = New System.Drawing.Point(486, 55)
+        Me.txtLastName.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtLastName.MaxLength = 30
+        Me.txtLastName.Name = "txtLastName"
+        Me.txtLastName.Size = New System.Drawing.Size(145, 25)
+        Me.txtLastName.TabIndex = 14
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(482, 33)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(168, 18)
+        Me.Label6.TabIndex = 15
+        Me.Label6.Text = "Last Name (Optional)"
+        '
+        'txtFirstName
+        '
+        Me.txtFirstName.Location = New System.Drawing.Point(319, 55)
+        Me.txtFirstName.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtFirstName.MaxLength = 30
+        Me.txtFirstName.Name = "txtFirstName"
+        Me.txtFirstName.Size = New System.Drawing.Size(145, 25)
+        Me.txtFirstName.TabIndex = 12
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(315, 33)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(88, 18)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Text = "First Name"
+        '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.TableLayoutPanel1.AutoSize = True
         Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TableLayoutPanel1.ColumnCount = 2
@@ -73,7 +119,7 @@ Partial Class Edit
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
         Me.TableLayoutPanel1.Controls.Add(Me.cmdSave, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.cmdAdd, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(172, 127)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(226, 178)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -105,7 +151,7 @@ Partial Class Edit
         '
         'txtDepartment
         '
-        Me.txtDepartment.Location = New System.Drawing.Point(582, 55)
+        Me.txtDepartment.Location = New System.Drawing.Point(675, 55)
         Me.txtDepartment.Margin = New System.Windows.Forms.Padding(4)
         Me.txtDepartment.MaxLength = 100
         Me.txtDepartment.Name = "txtDepartment"
@@ -115,7 +161,7 @@ Partial Class Edit
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(578, 33)
+        Me.Label4.Location = New System.Drawing.Point(671, 33)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(88, 18)
@@ -124,7 +170,8 @@ Partial Class Edit
         '
         'cmdCancel
         '
-        Me.cmdCancel.Location = New System.Drawing.Point(487, 132)
+        Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.cmdCancel.Location = New System.Drawing.Point(541, 183)
         Me.cmdCancel.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(195, 62)
@@ -135,11 +182,12 @@ Partial Class Edit
         'txtExtensionName
         '
         Me.txtExtensionName.ImeMode = System.Windows.Forms.ImeMode.Off
-        Me.txtExtensionName.Location = New System.Drawing.Point(321, 55)
+        Me.txtExtensionName.Location = New System.Drawing.Point(319, 111)
         Me.txtExtensionName.Margin = New System.Windows.Forms.Padding(4)
         Me.txtExtensionName.MaxLength = 30
         Me.txtExtensionName.Name = "txtExtensionName"
-        Me.txtExtensionName.Size = New System.Drawing.Size(228, 25)
+        Me.txtExtensionName.ReadOnly = True
+        Me.txtExtensionName.Size = New System.Drawing.Size(312, 25)
         Me.txtExtensionName.TabIndex = 1
         '
         'txtExtension
@@ -164,12 +212,12 @@ Partial Class Edit
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(317, 33)
+        Me.Label3.Location = New System.Drawing.Point(314, 89)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(40, 18)
+        Me.Label3.Size = New System.Drawing.Size(120, 18)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Name"
+        Me.Label3.Text = "Formatted Name"
         '
         'Label2
         '
@@ -195,7 +243,7 @@ Partial Class Edit
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(876, 249)
+        Me.ClientSize = New System.Drawing.Size(985, 303)
         Me.Controls.Add(Me.GroupBox1)
         Me.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -226,4 +274,8 @@ Partial Class Edit
     Friend WithEvents Label4 As Label
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents cmdAdd As Button
+    Friend WithEvents txtLastName As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtFirstName As TextBox
+    Friend WithEvents Label5 As Label
 End Class

@@ -95,7 +95,7 @@ Public Class PhoneDirectory
             For Each r As DataRow In Results.Rows
                 With ExtensionGrid.Rows
                     .Add(r.Item(Extension_Columns.Extension),
-                              r.Item(Extension_Columns.Name),
+                         FormatName(r.Item(Extension_Columns.FirstName), r.Item(Extension_Columns.LastName)),
                          r.Item(Extension_Columns.Department))
                     ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).HeaderCell.Value = r.Item(Extension_Columns.ID).ToString
                     ExtensionGrid.Rows(ExtensionGrid.Rows.Count - 1).ContextMenuStrip = ContextMenuStrip
@@ -108,6 +108,15 @@ Public Class PhoneDirectory
             ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
         End Try
     End Sub
+    Private Function FormatName(FirstName As Object, LastName As Object) As String
+        Dim Last As String = DirectCast(LastName, String)
+        Dim First As String = DirectCast(FirstName, String)
+        If Last <> String.Empty Then
+            Return Last & ", " & First
+        Else
+            Return First
+        End If
+    End Function
     Private Sub SetupGrid()
         ExtensionGrid.DataSource = Nothing
         ExtensionGrid.Rows.Clear()
