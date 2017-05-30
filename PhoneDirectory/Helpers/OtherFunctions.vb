@@ -63,7 +63,7 @@ Module OtherFunctions
         Return Results
     End Function
     Public Function CleanDBValue(Value As String) As Object
-        Dim CleanString As String = Regex.Replace(Trim(Value), "[/\r?\n|\r/g]+", String.Empty)
+        Dim CleanString As String = Regex.Replace(Trim(Value), "[/\r?\n|\r]+", String.Empty)
         Return IIf(CleanString = String.Empty, DBNull.Value, CleanString)
     End Function
 End Module

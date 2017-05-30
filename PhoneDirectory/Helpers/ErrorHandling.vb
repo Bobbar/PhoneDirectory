@@ -93,7 +93,7 @@ Module ErrorHandling
                 Dim blah = Message("Something went wrong with the SQL command. See log for details.  Log: " & strLogPath, vbOKOnly + vbCritical, "SQL Syntax Error")
                 Return True
             Case 1406
-                Dim blah = Message(ex.Message & vbCrLf & vbCrLf & "Log: " & strLogPath, vbOKOnly + vbCritical, "SQL Error")
+                Dim blah = Message(ex.Message & vbCrLf & vbCrLf & "Log: " & strLogPath, vbOKOnly + vbExclamation, "SQL Error")
                 Return True
             Case 1292
                 Dim blah = Message("Something went wrong with the SQL command. See log for details.  Log: " & strLogPath, vbOKOnly + vbCritical, "SQL Syntax Error")

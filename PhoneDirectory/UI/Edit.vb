@@ -9,6 +9,7 @@ Public Class Edit
         InitializeComponent()
         InitDBControls()
         GetExtension(ExtID)
+        InitLiveBox()
         Show()
     End Sub
     Sub New()
@@ -18,11 +19,14 @@ Public Class Edit
         bolAddNew = True
         cmdSave.Visible = False
         cmdAdd.Visible = True
+        InitLiveBox()
+        Me.Text = "Add New Extension"
+        Show()
+    End Sub
+    Private Sub InitLiveBox()
         Dim MyLiveBox As New clsLiveBox(Me)
         MyLiveBox.AttachToControl(txtDepartment, LiveBoxType.SelectValue, Extension_Columns.Department)
         MyLiveBox.AttachToControl(txtExtensionName, LiveBoxType.SelectValue, Extension_Columns.Name)
-        Me.Text = "Add New Extension"
-        Show()
     End Sub
     Private Sub InitDBControls()
         txtID.Tag = New DBControlInfo(Extension_Columns.ID)
@@ -54,25 +58,30 @@ Public Class Edit
         End If
     End Sub
     Private Function ValidateData() As Boolean
-        Dim bolValid As Boolean = False
-        Dim DBControls As New List(Of Control)
-        DataParser.GetDBControls(Me, DBControls)
-        For Each ctl As Control In DBControls
-            Dim DBInfo As DBControlInfo = DirectCast(ctl.Tag, DBControlInfo)
-            If DBInfo.Required Then
-                Select Case True
-                    Case TypeOf ctl Is TextBox
-                        Dim txt As TextBox = ctl
-                        txt.Text = Trim(txt.Text)
-                        If txt.Text <> String.Empty Then
-                            bolValid = True
-                        Else
-                            Return False
-                        End If
-                End Select
-            End If
-        Next
-        Return bolValid
+        Try
+            Dim bolValid As Boolean = False
+            Dim DBControls As New List(Of Control)
+            DataParser.GetDBControls(Me, DBControls)
+            For Each ctl As Control In DBControls
+                Dim DBInfo As DBControlInfo = DirectCast(ctl.Tag, DBControlInfo)
+                If DBInfo.Required Then
+                    Select Case True
+                        Case TypeOf ctl Is TextBox
+                            Dim txt As TextBox = ctl
+                            txt.Text = Trim(txt.Text)
+                            If txt.Text <> String.Empty Then
+                                bolValid = True
+                            Else
+                                Return False
+                            End If
+                    End Select
+                End If
+            Next
+            Return bolValid
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+            Return False
+        End Try
     End Function
     Private Function CollectData() As Extension
         If bolAddNew Then

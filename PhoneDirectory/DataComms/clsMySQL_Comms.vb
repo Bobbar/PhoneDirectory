@@ -33,7 +33,7 @@ Public Class clsMySQL_Comms : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 #End Region
-    Private Const strDatabase As String = "phone_test_db" '"phone_directory"
+    Private Const strDatabase As String = "phone_directory"
     Private Const EncMySqlPass As String = "5LwNVhnM3bvJrhzc+xFFx9nbMkH6oYkAuBTScy9bRL/QKY55txdAHQ=="
     Private MySQLConnectString As String = "server=" & strServerIP & ";uid=phone_dir_user;pwd=" & DecodePassword(EncMySqlPass) & ";database=" & strDatabase & ";ConnectionTimeout=5"
     Private ConnectionException As Exception

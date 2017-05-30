@@ -176,7 +176,7 @@ Public Class clsLiveBox : Implements IDisposable
         If e.KeyCode = Keys.Escape Then
             HideLiveBox()
         Else
-            If e.KeyCode <> Keys.ShiftKey Then
+            If e.KeyCode <> Keys.ShiftKey And e.KeyCode <> Keys.Tab Then
                 For Each item As LiveBoxArgs In LiveBoxControls
                     If item.Control Is sender Then
                         If Not item.Control.ReadOnly Then

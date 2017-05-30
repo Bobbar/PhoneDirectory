@@ -24,18 +24,18 @@ Partial Class Edit
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Edit))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.cmdSave = New System.Windows.Forms.Button()
+        Me.cmdAdd = New System.Windows.Forms.Button()
         Me.txtDepartment = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cmdCancel = New System.Windows.Forms.Button()
-        Me.cmdSave = New System.Windows.Forms.Button()
         Me.txtExtensionName = New System.Windows.Forms.TextBox()
         Me.txtExtension = New System.Windows.Forms.TextBox()
         Me.txtID = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.cmdAdd = New System.Windows.Forms.Button()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupBox1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -63,13 +63,54 @@ Partial Class Edit
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel1.AutoSize = True
+        Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel1.Controls.Add(Me.cmdSave, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.cmdAdd, 1, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(172, 127)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 1
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(250, 70)
+        Me.TableLayoutPanel1.TabIndex = 11
+        '
+        'cmdSave
+        '
+        Me.cmdSave.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdSave.Location = New System.Drawing.Point(4, 4)
+        Me.cmdSave.Margin = New System.Windows.Forms.Padding(4)
+        Me.cmdSave.Name = "cmdSave"
+        Me.cmdSave.Size = New System.Drawing.Size(117, 62)
+        Me.cmdSave.TabIndex = 3
+        Me.cmdSave.Text = "Save"
+        Me.cmdSave.UseVisualStyleBackColor = True
+        '
+        'cmdAdd
+        '
+        Me.cmdAdd.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdAdd.Location = New System.Drawing.Point(129, 4)
+        Me.cmdAdd.Margin = New System.Windows.Forms.Padding(4)
+        Me.cmdAdd.Name = "cmdAdd"
+        Me.cmdAdd.Size = New System.Drawing.Size(117, 62)
+        Me.cmdAdd.TabIndex = 4
+        Me.cmdAdd.Text = "Add"
+        Me.cmdAdd.UseVisualStyleBackColor = True
+        Me.cmdAdd.Visible = False
+        '
         'txtDepartment
         '
         Me.txtDepartment.Location = New System.Drawing.Point(582, 55)
         Me.txtDepartment.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtDepartment.MaxLength = 100
         Me.txtDepartment.Name = "txtDepartment"
         Me.txtDepartment.Size = New System.Drawing.Size(228, 25)
-        Me.txtDepartment.TabIndex = 9
+        Me.txtDepartment.TabIndex = 2
         '
         'Label4
         '
@@ -87,36 +128,28 @@ Partial Class Edit
         Me.cmdCancel.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(195, 62)
-        Me.cmdCancel.TabIndex = 7
+        Me.cmdCancel.TabIndex = 5
         Me.cmdCancel.Text = "Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
-        'cmdSave
-        '
-        Me.cmdSave.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdSave.Location = New System.Drawing.Point(4, 4)
-        Me.cmdSave.Margin = New System.Windows.Forms.Padding(4)
-        Me.cmdSave.Name = "cmdSave"
-        Me.cmdSave.Size = New System.Drawing.Size(117, 62)
-        Me.cmdSave.TabIndex = 6
-        Me.cmdSave.Text = "Save"
-        Me.cmdSave.UseVisualStyleBackColor = True
-        '
         'txtExtensionName
         '
+        Me.txtExtensionName.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.txtExtensionName.Location = New System.Drawing.Point(321, 55)
         Me.txtExtensionName.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtExtensionName.MaxLength = 30
         Me.txtExtensionName.Name = "txtExtensionName"
         Me.txtExtensionName.Size = New System.Drawing.Size(228, 25)
-        Me.txtExtensionName.TabIndex = 5
+        Me.txtExtensionName.TabIndex = 1
         '
         'txtExtension
         '
         Me.txtExtension.Location = New System.Drawing.Point(138, 55)
         Me.txtExtension.Margin = New System.Windows.Forms.Padding(4)
+        Me.txtExtension.MaxLength = 13
         Me.txtExtension.Name = "txtExtension"
         Me.txtExtension.Size = New System.Drawing.Size(145, 25)
-        Me.txtExtension.TabIndex = 4
+        Me.txtExtension.TabIndex = 0
         '
         'txtID
         '
@@ -126,6 +159,7 @@ Partial Class Edit
         Me.txtID.ReadOnly = True
         Me.txtID.Size = New System.Drawing.Size(67, 25)
         Me.txtID.TabIndex = 3
+        Me.txtID.TabStop = False
         '
         'Label3
         '
@@ -156,35 +190,6 @@ Partial Class Edit
         Me.Label1.Size = New System.Drawing.Size(24, 18)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "ID"
-        '
-        'cmdAdd
-        '
-        Me.cmdAdd.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdAdd.Location = New System.Drawing.Point(129, 4)
-        Me.cmdAdd.Margin = New System.Windows.Forms.Padding(4)
-        Me.cmdAdd.Name = "cmdAdd"
-        Me.cmdAdd.Size = New System.Drawing.Size(117, 62)
-        Me.cmdAdd.TabIndex = 10
-        Me.cmdAdd.Text = "Add"
-        Me.cmdAdd.UseVisualStyleBackColor = True
-        Me.cmdAdd.Visible = False
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TableLayoutPanel1.AutoSize = True
-        Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel1.ColumnCount = 2
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel1.Controls.Add(Me.cmdSave, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.cmdAdd, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(172, 127)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 1
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(250, 70)
-        Me.TableLayoutPanel1.TabIndex = 11
         '
         'Edit
         '
