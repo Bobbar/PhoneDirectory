@@ -205,7 +205,6 @@
     <Folder Include="Type_Classes\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PhoneDirectory_TemporaryKey.pfx" />
     <None Include="Resources\critical_funny_crop_2.png" />
   </ItemGroup>
   <ItemGroup>
