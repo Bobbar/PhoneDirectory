@@ -81,12 +81,18 @@ Module modSecurityMod
         Return False
     End Function
     Public Function CheckForAccess(recModule As String) As Boolean
-        If Not CanAccess(recModule, CurrentUser.AccessLevel) Then
-            Dim blah = Message("You do not have the required rights for this function. Must have access to '" & recModule & "'.", vbOKOnly + vbExclamation, "Access Denied", PhoneDirectory)
-            Return False
+        If Not OfflineMode Then
+            If Not CanAccess(recModule, CurrentUser.AccessLevel) Then
+                Dim blah = Message("You do not have the required rights for this function. Must have access to '" & recModule & "'.", vbOKOnly + vbExclamation, "Access Denied", PhoneDirectory)
+                Return False
+            Else
+                Return True
+            End If
         Else
-            Return True
+            Dim blah = Message("Edit functions disabled. Application is currently in offline mode.", vbOKOnly + vbExclamation, "Offline Mode", PhoneDirectory)
+            Return False
         End If
+
     End Function
     Public Sub GetUserAccess()
         Try

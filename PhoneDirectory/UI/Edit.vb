@@ -92,8 +92,7 @@ Public Class Edit
     Private Sub GetExtension(ExtID As Integer)
         Try
             Dim strQRY As String = "SELECT * FROM " & Extension_Columns.TableName & " WHERE " & Extension_Columns.ID & "='" & ExtID & "'"
-            Using SQLComms As New clsMySQL_Comms,
-                results As DataTable = SQLComms.Return_SQLTable(strQRY)
+            Using results = DBFunc.DataTableFromQueryString(strQRY)
                 With results.Rows(0)
                     MyExtension = New Extension(.Item(Extension_Columns.ID), .Item(Extension_Columns.Extension), .Item(Extension_Columns.Name), .Item(Extension_Columns.Department))
                 End With

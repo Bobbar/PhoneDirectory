@@ -114,10 +114,10 @@ Partial Class PhoneDirectory
         'cmdSearch
         '
         Me.cmdSearch.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdSearch.Location = New System.Drawing.Point(246, 129)
+        Me.cmdSearch.Location = New System.Drawing.Point(246, 122)
         Me.cmdSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.cmdSearch.Name = "cmdSearch"
-        Me.cmdSearch.Size = New System.Drawing.Size(168, 10)
+        Me.cmdSearch.Size = New System.Drawing.Size(168, 17)
         Me.cmdSearch.TabIndex = 4
         Me.cmdSearch.TabStop = False
         Me.cmdSearch.Text = "Search"

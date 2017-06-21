@@ -38,16 +38,13 @@ Public Class clsMySQL_Comms : Implements IDisposable
     Private MySQLConnectString As String = "server=" & strServerIP & ";uid=phone_dir_user;pwd=" & DecodePassword(EncMySqlPass) & ";database=" & strDatabase & ";ConnectionTimeout=5"
     Private ConnectionException As Exception
     Public Connection As MySqlConnection = NewConnection()
-    Sub New()
-        'If bolServerPinging Then
-        If Not OpenConnection() Then
-            Throw ConnectionException 'If cannot connect, collect the exact exception and pass it to the referencing object
-            Dispose()
+    Sub New(Optional OpenConnectionOnCall As Boolean = True)
+        If OpenConnectionOnCall Then
+            If Not OpenConnection() Then
+                Throw ConnectionException 'If cannot connect, collect the exact exception and pass it to the referencing object
+                Dispose()
+            End If
         End If
-        'Else
-        ' Throw New NoPingException
-        '  Dispose()
-        ' End If
     End Sub
     Public Function Return_SQLTable(strSQLQry As String) As DataTable
         'Debug.Print("Table Hit " & Date.Now.Ticks)
@@ -124,5 +121,6 @@ Public Class clsMySQL_Comms : Implements IDisposable
         Connection.Close()
         Connection.Dispose()
     End Sub
+
 End Class
 

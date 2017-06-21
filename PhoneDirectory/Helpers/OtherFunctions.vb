@@ -7,9 +7,13 @@ Module OtherFunctions
     Public stpw As New Stopwatch
     Public Sub EndProgram()
         'ProgramEnding = True
-        Logger("Ending Program...")
-        'PurgeTempDir()
-        Application.Exit()
+        If Not BuildingCache Then
+            Logger("Ending Program...")
+            'PurgeTempDir()
+            Application.Exit()
+        Else
+            Message("DB Cache is still being built. Please wait an try again.", vbOKOnly + vbInformation, "Application Busy")
+        End If
     End Sub
     Public Sub Logger(Message As String)
         Dim MaxLogSizeKiloBytes As Short = 100
@@ -17,7 +21,7 @@ Module OtherFunctions
         Dim infoReader As FileInfo
         infoReader = My.Computer.FileSystem.GetFileInfo(strLogPath)
         If Not File.Exists(strLogPath) Then
-            Dim di As DirectoryInfo = Directory.CreateDirectory(strLogDir)
+            Dim di As DirectoryInfo = Directory.CreateDirectory(strAppDir)
             Using sw As StreamWriter = File.CreateText(strLogPath)
                 sw.WriteLine(DateStamp & ": Log Created...")
                 sw.WriteLine(DateStamp & ": " & Message)

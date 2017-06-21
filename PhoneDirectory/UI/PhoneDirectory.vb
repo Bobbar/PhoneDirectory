@@ -1,14 +1,48 @@
 ﻿Option Explicit On
 Option Strict On
 Imports MySql.Data.MySqlClient
+Imports System.Data.SQLite
+Imports System.Data.Common
+Imports System.ComponentModel
 Public Class PhoneDirectory
-    Private LastCommand As MySqlCommand
+    Private LastCommand As DbCommand
     Private DataParser As New DBControlParser
+
     Private Sub LoadProgram()
         SetDBColumns()
-        GetUserAccess()
-        GetAccessLevels()
+        If CheckConnection() Then
+            GetUserAccess()
+            GetAccessLevels()
+            RefreshLocalCache()
+        Else
+            OfflineMode = True
+            If CheckSQLiteConnection() Then
+                Message("Could not connect to database. Application will run in cached offline mode.", vbOKOnly + vbExclamation, "Connection Failure", Me)
+            Else
+                Message("Could not connect to database and a local cache is unavailable. The application will now close.", vbOKOnly + vbExclamation, "Connection Failure", Me)
+                EndProgram()
+            End If
+        End If
         ExtendedMethods.DoubleBuffered(ExtensionGrid, True)
+    End Sub
+    Private Function CheckSQLiteConnection() As Boolean
+        Using conn As New SQLite_Comms(False)
+            Return conn.OpenConnection
+        End Using
+    End Function
+    Private Function CheckConnection() As Boolean
+        Using conn As New clsMySQL_Comms(False)
+            Return conn.OpenConnection
+        End Using
+    End Function
+    Private Sub RefreshLocalCache()
+        Dim tsk = Task.Run(Sub()
+                               BuildingCache = True
+                               Using conn As New SQLite_Comms(False)
+                                   conn.RefreshSQLCache()
+                               End Using
+                               BuildingCache = False
+                           End Sub)
     End Sub
     Private Sub SetDBColumns()
         txtExtension.Tag = New DBControlInfo(Extension_Columns.Extension)
@@ -20,15 +54,16 @@ Public Class PhoneDirectory
     End Sub
     Public Sub SearchExtension()
         Try
-            Dim cmd As New MySqlCommand
+            Dim cmd = DBFunc.GetCommand
             Dim strStartQry As String = "SELECT * FROM " & Extension_Columns.TableName & " WHERE"
-            Dim strDynaQry As String
+            Dim strDynaQry As String = ""
             Dim SearchValCol As List(Of SearchVal) = BuildSearchListNew()
             For Each fld As SearchVal In SearchValCol
                 If Not IsNothing(fld.Value) Then
                     If fld.Value.ToString <> "" Then
-                        strDynaQry = strDynaQry + " " + fld.FieldName + " LIKE CONCAT('%', @" + fld.FieldName + ", '%') AND"
-                        cmd.Parameters.AddWithValue("@" & fld.FieldName, fld.Value) 'If TypeOf fld.Value Is Boolean Then  'trackable boolean. if false, dont add it.
+                        strDynaQry = strDynaQry + " " + fld.FieldName + " LIKE @" + fld.FieldName + " AND"
+                        Dim Value As String = "%" & fld.Value.ToString & "%"
+                        cmd.AddParameterWithValue("@" & fld.FieldName, Value) 'If TypeOf fld.Value Is Boolean Then  'trackable boolean. if false, dont add it.
                     End If
                 End If
             Next
@@ -49,18 +84,10 @@ Public Class PhoneDirectory
             ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
         End Try
     End Sub
-    Private Async Sub StartQuery(QryCommand As MySqlCommand)
+    Private Async Sub StartQuery(QryCommand As DbCommand)
         Try
             Dim Results = Await Task.Run(Function()
-                                             Using LocalSQLComm As New clsMySQL_Comms,
-                    tmpResults As New DataTable,
-                    da As New MySqlDataAdapter,
-                    QryComm As MySqlCommand = QryCommand
-                                                 QryComm.Connection = LocalSQLComm.Connection
-                                                 da.SelectCommand = QryComm
-                                                 da.Fill(tmpResults)
-                                                 Return tmpResults
-                                             End Using
+                                             Return DBFunc.DataTableFromCommand(QryCommand)
                                          End Function)
             SendToGrid(Results)
         Catch ex As Exception
@@ -187,5 +214,11 @@ Public Class PhoneDirectory
         Catch ex As Exception
             ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
         End Try
+    End Sub
+    Private Sub PhoneDirectory_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If BuildingCache Then
+            e.Cancel = True
+            Message("DB Cache is still being built. Please wait an try again.", vbOKOnly + vbInformation, "Application Busy", Me)
+        End If
     End Sub
 End Class
