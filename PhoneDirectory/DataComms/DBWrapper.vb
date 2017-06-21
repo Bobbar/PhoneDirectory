@@ -10,21 +10,29 @@ Public Class DBWrapper
         End If
     End Function
     Public Function DataTableFromQueryString(Query As String) As DataTable
-        Using conn = GetConnection(), results As New DataTable, da As DbDataAdapter = GetAdapter()
-            da.SelectCommand = GetCommand(Query)
-            da.Fill(results)
-            Return results
-        End Using
+        Try
+            Using conn = GetConnection(), results As New DataTable, da As DbDataAdapter = GetAdapter()
+                da.SelectCommand = GetCommand(Query)
+                da.Fill(results)
+                Return results
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Function
     Public Function DataTableFromCommand(ByRef Command As DbCommand) As DataTable
-        Using conn = GetConnection(), results As New DataTable, da As DbDataAdapter = GetAdapter()
-            Command.Connection = conn
-            da.SelectCommand = Command
-            da.Fill(results)
-            da.Dispose()
-            Command.Dispose()
-            Return results
-        End Using
+        Try
+            Using conn = GetConnection(), results As New DataTable, da As DbDataAdapter = GetAdapter()
+                Command.Connection = conn
+                da.SelectCommand = Command
+                da.Fill(results)
+                da.Dispose()
+                Command.Dispose()
+                Return results
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Function
     Public Function GetCommand(QryString As String) As DbCommand
         If OfflineMode Then
@@ -41,12 +49,17 @@ Public Class DBWrapper
         End If
     End Function
     Public Function GetConnection() As DbConnection
-        If OfflineMode Then
-            Dim SQLiteComms As New SQLite_Comms
-            Return SQLiteComms.Connection
-        Else
-            Dim MySQLComms As New clsMySQL_Comms
-            Return MySQLComms.Connection
-        End If
+        Try
+            If OfflineMode Then
+                Dim SQLiteComms As New SQLite_Comms
+                Return SQLiteComms.Connection
+            Else
+                Dim MySQLComms As New clsMySQL_Comms
+                Return MySQLComms.Connection
+            End If
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Function
+
 End Class

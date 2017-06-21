@@ -13,7 +13,7 @@ Public Class PhoneDirectory
         If CheckConnection() Then
             GetUserAccess()
             GetAccessLevels()
-            RefreshLocalCache()
+            RefreshLocalDBCache()
         Else
             OfflineMode = True
             If CheckSQLiteConnection() Then
@@ -35,15 +35,6 @@ Public Class PhoneDirectory
             Return conn.OpenConnection
         End Using
     End Function
-    Private Sub RefreshLocalCache()
-        Dim tsk = Task.Run(Sub()
-                               BuildingCache = True
-                               Using conn As New SQLite_Comms(False)
-                                   conn.RefreshSQLCache()
-                               End Using
-                               BuildingCache = False
-                           End Sub)
-    End Sub
     Private Sub SetDBColumns()
         txtExtension.Tag = New DBControlInfo(Extension_Columns.Extension)
         txtExtName.Tag = New DBControlInfo(Extension_Columns.Name)

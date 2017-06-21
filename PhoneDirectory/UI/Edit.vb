@@ -118,6 +118,7 @@ Public Class Edit
                 rows = UpdateAdapter.Update(GetUpdateTable(UpdateAdapter))
             End Using
             If rows > 0 Then
+                RefreshLocalDBCache()
                 Return True
             Else
                 Return False
@@ -136,6 +137,7 @@ Public Class Edit
                 rows = InsertAdapter.Update(DataParser.ReturnInsertTable(Me, InsertQry)) 'GetinsertTable(InsertAdapter))
             End Using
             If rows > 0 Then
+                RefreshLocalDBCache()
                 Return True
             Else
                 Return False

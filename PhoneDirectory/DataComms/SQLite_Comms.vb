@@ -13,50 +13,66 @@ Public Class SQLite_Comms : Implements IDisposable
         End If
     End Sub
     Private Function GetRemoteDBTable() As DataTable
-        Dim qry As String = "SELECT * FROM extensions"
-        Using conn As New clsMySQL_Comms, results As New DataTable, adapter = conn.Return_Adapter(qry)
-            adapter.AcceptChangesDuringFill = False
-            adapter.Fill(results)
-            results.TableName = "extensions"
-            Return results
-        End Using
-
+        Try
+            Dim qry As String = "SELECT * FROM extensions"
+            Using conn As New clsMySQL_Comms, results As New DataTable, adapter = conn.Return_Adapter(qry)
+                adapter.AcceptChangesDuringFill = False
+                adapter.Fill(results)
+                results.TableName = "extensions"
+                Return results
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Function
     Public Sub RefreshSQLCache()
-        Logger("Rebuilding local DB cache...")
-        CloseConnection()
-        If File.Exists(strSQLiteDir) Then
-            File.Delete(strSQLitePath)
-        Else
-            Dim di As DirectoryInfo = Directory.CreateDirectory(strSQLiteDir)
-        End If
-        SQLiteConnection.CreateFile(strSQLitePath)
-        Connection = NewConnection()
-        OpenConnection()
-        CreateCacheTables()
-        ImportDatabase()
-        Logger("Local DB cache complete...")
+        Try
+            Logger("Rebuilding local DB cache...")
+            CloseConnection()
+            If File.Exists(strSQLiteDir) Then
+                File.Delete(strSQLitePath)
+            Else
+                Dim di As DirectoryInfo = Directory.CreateDirectory(strSQLiteDir)
+            End If
+            SQLiteConnection.CreateFile(strSQLitePath)
+            Connection = NewConnection()
+            OpenConnection()
+            CreateCacheTables()
+            ImportDatabase()
+            Logger("Local DB cache complete...")
+        Catch ex As Exception
+            Logger("Errors during cache rebuild!")
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Sub
     Private Sub CreateCacheTables()
-        Dim qry As String = "CREATE TABLE `extensions` (
+        Try
+            Dim qry As String = "CREATE TABLE `extensions` (
   `id` INTEGER PRIMARY KEY,
   `extension` varchar(13) NOT NULL,
   `user` varchar(60) NOT NULL,
   `department` varchar(100) DEFAULT NULL,
   `firstname` varchar(45) NOT NULL,
   `lastname` varchar(45) DEFAULT NULL)"
-        Using cmd As New SQLiteCommand(qry, Connection)
-            cmd.ExecuteNonQuery()
-        End Using
+            Using cmd As New SQLiteCommand(qry, Connection)
+                cmd.ExecuteNonQuery()
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Sub
     Private Sub ImportDatabase()
-        OpenConnection()
-        Using cmd = Connection.CreateCommand, adapter = New SQLiteDataAdapter(cmd), builder As New SQLiteCommandBuilder(adapter), trans = Connection.BeginTransaction
-            cmd.Transaction = trans
-            cmd.CommandText = "SELECT * FROM extensions"
-            adapter.Update(GetRemoteDBTable)
-            trans.Commit()
-        End Using
+        Try
+            OpenConnection()
+            Using cmd = Connection.CreateCommand, adapter = New SQLiteDataAdapter(cmd), builder As New SQLiteCommandBuilder(adapter), trans = Connection.BeginTransaction
+                cmd.Transaction = trans
+                cmd.CommandText = "SELECT * FROM extensions"
+                adapter.Update(GetRemoteDBTable)
+                trans.Commit()
+            End Using
+        Catch ex As Exception
+            ErrHandle(ex, System.Reflection.MethodInfo.GetCurrentMethod())
+        End Try
     End Sub
     Public Function OpenConnection() As Boolean
         Try
