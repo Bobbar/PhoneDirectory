@@ -23,6 +23,7 @@ Public Class SQLite_Comms : Implements IDisposable
 
     End Function
     Public Sub RefreshSQLCache()
+        Logger("Rebuilding local DB cache...")
         CloseConnection()
         If File.Exists(strSQLiteDir) Then
             File.Delete(strSQLitePath)
@@ -34,6 +35,7 @@ Public Class SQLite_Comms : Implements IDisposable
         OpenConnection()
         CreateCacheTables()
         ImportDatabase()
+        Logger("Local DB cache complete...")
     End Sub
     Private Sub CreateCacheTables()
         Dim qry As String = "CREATE TABLE `extensions` (
@@ -49,9 +51,11 @@ Public Class SQLite_Comms : Implements IDisposable
     End Sub
     Private Sub ImportDatabase()
         OpenConnection()
-        Using cmd = Connection.CreateCommand, adapter = New SQLiteDataAdapter(cmd), builder As New SQLiteCommandBuilder(adapter)
+        Using cmd = Connection.CreateCommand, adapter = New SQLiteDataAdapter(cmd), builder As New SQLiteCommandBuilder(adapter), trans = Connection.BeginTransaction
+            cmd.Transaction = trans
             cmd.CommandText = "SELECT * FROM extensions"
             adapter.Update(GetRemoteDBTable)
+            trans.Commit()
         End Using
     End Sub
     Public Function OpenConnection() As Boolean
