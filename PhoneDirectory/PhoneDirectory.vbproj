@@ -142,7 +142,6 @@
     <Compile Include="DataComms\DataFunctions.vb" />
     <Compile Include="DataComms\DBWrapper.vb" />
     <Compile Include="DataComms\ServerInfo.vb" />
-    <Compile Include="DataComms\SQLiteDatabase.vb" />
     <Compile Include="DataComms\SQLite_Comms.vb" />
     <Compile Include="Helpers\ErrorHandling.vb" />
     <Compile Include="Helpers\ExtendedMethods.vb" />
